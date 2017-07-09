@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">The Daily Feed</string>
+    <string name="powered_by_powered_by_newsapi_org">Powered by powered by NewsAPI.org</string>
+</resources>
