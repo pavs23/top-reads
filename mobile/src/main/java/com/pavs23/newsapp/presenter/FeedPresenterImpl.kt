@@ -31,17 +31,9 @@ class FeedPresenterImpl : FeedPresenter {
 
         postsModel.getTopNews(object : getTopNewsListener {
 
-            override fun onSuccess(redditNewsResponse: NewsApiResponse?) {
-                feedView.hideProgressBar()
-                feedView.showTopNews(redditNewsResponse!!)
-            }
-
-            override fun onFailure(errorMessage: String?) {
-                feedView.hideProgressBar()
-                feedView.showError(errorMessage)
-            }
+            override fun onSuccess(newsApiResponse: NewsApiResponse?) = with(feedView) { hideProgressBar(); showTopNews(newsApiResponse!!) }
+            override fun onFailure(errorMessage: String?) = with(feedView) { hideProgressBar(); showError(errorMessage) }
         })
-
     }
 
 }
