@@ -22,7 +22,6 @@ class PostsModelImpl : PostsModel {
                 .baseUrl("https://newsapi.org")
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build()
-
         newsApi = newsRetrofit.create(NewsApi::class.java)
     }
 
@@ -36,7 +35,7 @@ class PostsModelImpl : PostsModel {
                 if (response?.isSuccessful ?: false && response?.body()?.status.equals("ok")) {
                     getTopNewsListener.onSuccess(response?.body())
                 } else {
-                    getTopNewsListener.onFailure(response?.body()?.message)
+                    getTopNewsListener.onFailure(response?.body()?.message ?: "Sorry :(")
                 }
             }
 

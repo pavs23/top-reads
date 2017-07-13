@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.TextView
 import com.pavs23.newsapp.R
 import com.pavs23.newsapp.datamodel.NewsApiArticle
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.headline_layout.view.*
 
 
 /**
@@ -35,6 +38,10 @@ class SimpleListAdapter(dataList: List<NewsApiArticle>, context: Context) : Base
         }
 
         viewHolder.headline.text = dataList[position].title
+        Picasso.with(parent?.context)
+                .load(dataList[position].urlToImage)
+                .into(viewHolder.image)
+
         return view
     }
 
@@ -52,6 +59,7 @@ class SimpleListAdapter(dataList: List<NewsApiArticle>, context: Context) : Base
 
     private class HeadlineRowHolder(row: View?) {
         val headline: TextView = row?.findViewById<TextView>(R.id.headline) as TextView
+        val image: ImageView = row?.findViewById<ImageView>(R.id.image_view) as ImageView
     }
 
 }

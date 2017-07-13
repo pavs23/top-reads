@@ -8,7 +8,6 @@ import com.pavs23.newsapp.view.FeedView
 
 class FeedPresenterImpl : FeedPresenter {
 
-
     private lateinit var feedView: FeedView
     private lateinit var postsModel: PostsModel
 
@@ -24,18 +23,14 @@ class FeedPresenterImpl : FeedPresenter {
         postsModel = PostsModelImpl()
     }
 
-
     override fun onLoad() {
 
         feedView.showProgressBar()
-
         postsModel.getTopNews(object : getTopNewsListener {
 
             override fun onSuccess(newsApiResponse: NewsApiResponse?) = feedView.run { hideProgressBar(); showTopNews(newsApiResponse!!) }
 
             override fun onFailure(errorMessage: String?) = feedView.run { hideProgressBar(); showError(errorMessage) }
         })
-
     }
-
 }
