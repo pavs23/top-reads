@@ -16,7 +16,7 @@ class PostsModelImpl : PostsModel {
 
     // You can get your own API Key here: https://newsapi.org
 
-    private val API_KEY: String = "737e4d0af42c442bafb6d6e94d73f0df"
+    private val API_KEY: String = ""
     private val newsApi: NewsApi
 
     private lateinit var newsData: NewsApiResponse
