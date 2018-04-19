@@ -19,10 +19,8 @@ import kotlinx.android.synthetic.main.headline_layout.view.*
 class SimpleListAdapter(dataList: List<NewsApiArticle>, context: Context) : BaseAdapter() {
 
 
-    internal val dataList = dataList
-
+    private val dataList = dataList
     private val mInflator: LayoutInflater = LayoutInflater.from(context)
-
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View
@@ -40,8 +38,9 @@ class SimpleListAdapter(dataList: List<NewsApiArticle>, context: Context) : Base
         viewHolder.headline.text = dataList[position].title
         Picasso.with(parent?.context)
                 .load(dataList[position].urlToImage)
+                .resize(2000, 1000)
+                .centerCrop()
                 .into(viewHolder.image)
-
         return view
     }
 

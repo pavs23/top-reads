@@ -1,5 +1,7 @@
 package com.pavs23.newsapp.model
 
+import android.os.Build
+import android.support.annotation.RequiresApi
 import com.pavs23.newsapp.datamodel.NewsApiResponse
 import com.pavs23.newsapp.presenter.FeedPresenterImpl
 import com.pavs23.newsapp.service.NewsApi
@@ -14,8 +16,10 @@ class PostsModelImpl : PostsModel {
 
     // You can get your own API Key here: https://newsapi.org
 
-    private val API_KEY: String = "YOUR_API_KEY"
+    private val API_KEY: String = "737e4d0af42c442bafb6d6e94d73f0df"
     private val newsApi: NewsApi
+
+    private lateinit var newsData: NewsApiResponse
 
     init {
         val newsRetrofit = Retrofit.Builder()
@@ -34,6 +38,7 @@ class PostsModelImpl : PostsModel {
             override fun onResponse(call: Call<NewsApiResponse>?, response: Response<NewsApiResponse>?) {
                 if (response?.isSuccessful ?: false && response?.body()?.status.equals("ok")) {
                     getTopNewsListener.onSuccess(response?.body())
+                    newsData = response?.body()!!
                 } else {
                     getTopNewsListener.onFailure(response?.body()?.message ?: "Sorry :(")
                 }
@@ -43,6 +48,17 @@ class PostsModelImpl : PostsModel {
                 getTopNewsListener.onFailure("Oh no! Couldn't load the feed!")
             }
         })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun getArticle(positon: Int, urlListener: FeedPresenterImpl.getUrlListener) {
+        var url = newsData.articles?.get(positon)?.url
+
+        if (url != null && !url.isEmpty()) {
+            urlListener.onSuccess(url)
+        } else {
+            urlListener.onFailure("Sorry, article doesn't exist anymore")
+        }
     }
 
 }

@@ -9,11 +9,18 @@ import com.pavs23.newsapp.view.FeedView
 class FeedPresenterImpl : FeedPresenter {
 
     private lateinit var feedView: FeedView
-    private lateinit var postsModel: PostsModel
 
+    private lateinit var postsModel: PostsModel
     interface getTopNewsListener {
 
         fun onSuccess(newsApiResponse: NewsApiResponse?)
+
+        fun onFailure(errorMessage: String?)
+
+    }
+
+    interface getUrlListener {
+        fun onSuccess(url: String)
 
         fun onFailure(errorMessage: String?)
     }
@@ -31,6 +38,21 @@ class FeedPresenterImpl : FeedPresenter {
             override fun onSuccess(newsApiResponse: NewsApiResponse?) = feedView.run { hideProgressBar(); showTopNews(newsApiResponse!!) }
 
             override fun onFailure(errorMessage: String?) = feedView.run { hideProgressBar(); showError(errorMessage) }
+        })
+    }
+
+    override fun onItemClicked(positon: Int) {
+        feedView.showProgressBar()
+        postsModel.getArticle(positon, object : getUrlListener {
+            override fun onSuccess(url: String) {
+                feedView.hideProgressBar()
+                feedView.showArticle(url)
+            }
+
+            override fun onFailure(errorMessage: String?) {
+                feedView.hideProgressBar()
+                feedView.showError("url not found")
+            }
         })
     }
 }

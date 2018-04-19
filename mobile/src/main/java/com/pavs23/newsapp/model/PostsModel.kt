@@ -9,4 +9,6 @@ interface PostsModel {
 
     fun getTopNews(getTopNewsListener: FeedPresenterImpl.getTopNewsListener)
 
+    fun getArticle(position: Int, getUrlListener: FeedPresenterImpl.getUrlListener)
+
 }

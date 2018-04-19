@@ -1,5 +1,6 @@
 package com.pavs23.newsapp.presenter
 
+import android.view.View
 import com.pavs23.newsapp.view.FeedView
 
 /**
@@ -10,4 +11,6 @@ interface FeedPresenter {
     fun onBind(feedView: FeedView)
 
     fun onLoad()
+
+    fun onItemClicked(position: Int)
 }

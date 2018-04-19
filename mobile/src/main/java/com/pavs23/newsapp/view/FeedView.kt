@@ -15,4 +15,6 @@ interface FeedView {
     fun showProgressBar()
 
     fun hideProgressBar()
+
+    fun showArticle(url: String)
 }
